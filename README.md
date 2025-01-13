@@ -1,9 +1,18 @@
 # Ecommerce-Project
 ## DATASET
 https://support.google.com/analytics/answer/3437719?hl=en
-| Cột 1 | Cột 2 | Cột 3 |
+| Field Name | Data Type | Description |
 |-------|-------|-------|
-| Hàng 1 | Dữ liệu 1 | Dữ liệu 2 |
-| Hàng 2 | Dữ liệu 3 | Dữ liệu 4 |
-| Hàng 3 | Dữ liệu 5 | Dữ liệu 6 |
+| fullVisitorId | STRING | The unique visitor ID. |
+| date | STRING | The date of the session in YYYYMMDD format. |
+| totals | RECORD | This section contains aggregate values across the session. |
+|totals.bounces|INTEGER|Total bounces (for convenience). For a bounced session, the value is 1, otherwise it is null.|
+|-------|-------|-------|
+|-------|-------|-------|
+|-------|-------|-------|
+|-------|-------|-------|
+|-------|-------|-------|
+|-------|-------|-------|
+|-------|-------|-------|
+|-------|-------|-------|
 
