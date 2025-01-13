@@ -43,8 +43,20 @@ ORDER By
 |02   |62192 |233373   |733         |
 |03   |69931 |259522   |993         |
 
-### **Query 02:
+### **Query 02: Bounce rate per traffic source in July 2017 (Bounce_rate = num_bounce/total_visit) (order by total_visit DESC)**
 ```sql
+SELECT
+  trafficSource.source
+  ,SUM(totals.visits) AS total_visit
+  ,SUM(totals.bounces) AS total_no_of_bounces
+  ,ROUND(SUM(totals.bounces)/SUM(totals.visits) * 100,3) AS bounce_rate
+FROM 
+  `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`
+GROUP BY
+  trafficSource.source
+ORDER BY
+  total_visit DESC;
+
 ```
 |source                     |total_visit|total_no_of_bounces|bounce_rate|
 |---------------------------|-----------|-------------------|-----------|
@@ -145,3 +157,359 @@ ORDER By
 |aol                        |1          |                   |           |
 |google.es                  |1          |1                  |100.0      |
 |malaysia.search.yahoo.com  |1          |1                  |100.0      |
+
+### **Query 03: Revenue by traffic source by week, by month in June 2017**  
+```sql
+  
+SELECT
+    'WEEK' AS time_type
+    ,FORMAT_DATE('%Y%W',PARSE_DATE('%Y%m%d',date)) AS time
+    ,trafficSource.source
+    ,SUM(product.productRevenue) / 1000000 AS revenue
+FROM
+    `bigquery-public-data.google_analytics_sample.ga_sessions_201706*`
+    ,UNNEST (hits) hits
+    ,UNNEST (hits.product) product
+WHERE
+    product.productRevenue IS NOT NULL
+GROUP BY
+  time
+  ,trafficSource.source
+
+UNION ALL
+
+SELECT
+    'Month' AS time_type
+    ,FORMAT_DATE('%Y%m',PARSE_DATE('%Y%m%d',date)) AS time
+    ,trafficSource.source
+    ,SUM(product.productRevenue) / 1000000 AS revenue
+FROM
+    `bigquery-public-data.google_analytics_sample.ga_sessions_201706*`
+    ,UNNEST (hits) hits
+    ,UNNEST (hits.product) product
+WHERE
+    product.productRevenue is not null
+GROUP BY
+  time
+  ,trafficSource.source
+Order BY
+    revenue DESC;
+
+```
+|time_type|time |source|revenue|
+|---------|-----|------|-------|
+|Month    |201706|(direct)|97333.619695|
+|WEEK     |201724|(direct)|30908.909927|
+|WEEK     |201725|(direct)|27295.319924|
+|Month    |201706|google|18757.17992|
+|WEEK     |201723|(direct)|17325.679919|
+|WEEK     |201726|(direct)|14914.80995|
+|WEEK     |201724|google|9217.169976|
+|Month    |201706|dfa   |8862.229996|
+|WEEK     |201722|(direct)|6888.899975|
+|WEEK     |201726|google|5330.569964|
+|WEEK     |201726|dfa   |3704.74|
+|Month    |201706|mail.google.com|2563.13|
+|WEEK     |201724|mail.google.com|2486.86|
+|WEEK     |201724|dfa   |2341.56|
+|WEEK     |201722|google|2119.38999|
+|WEEK     |201722|dfa   |1670.649998|
+|WEEK     |201723|dfa   |1145.279998|
+|WEEK     |201723|google|1083.949999|
+|WEEK     |201725|google|1006.099991|
+|WEEK     |201723|search.myway.com|105.939998|
+|Month    |201706|search.myway.com|105.939998|
+|Month    |201706|groups.google.com|101.96 |
+|WEEK     |201725|mail.google.com|76.27  |
+|Month    |201706|chat.google.com|74.03  |
+|WEEK     |201723|chat.google.com|74.03  |
+|WEEK     |201724|dealspotr.com|72.95  |
+|Month    |201706|dealspotr.com|72.95  |
+|WEEK     |201725|mail.aol.com|64.849998|
+|Month    |201706|mail.aol.com|64.849998|
+|WEEK     |201726|groups.google.com|63.37  |
+|Month    |201706|phandroid.com|52.95  |
+|WEEK     |201725|phandroid.com|52.95  |
+|Month    |201706|sites.google.com|39.17  |
+|WEEK     |201725|groups.google.com|38.59  |
+|WEEK     |201725|sites.google.com|25.19  |
+|WEEK     |201725|google.com|23.99  |
+|Month    |201706|google.com|23.99  |
+|Month    |201706|yahoo |20.39  |
+|WEEK     |201726|yahoo |20.39  |
+|Month    |201706|youtube.com|16.99  |
+|WEEK     |201723|youtube.com|16.99  |
+|Month    |201706|bing  |13.98  |
+|WEEK     |201724|bing  |13.98  |
+|WEEK     |201722|sites.google.com|13.98  |
+|Month    |201706|l.facebook.com|12.48  |
+|WEEK     |201724|l.facebook.com|12.48  |
+
+### **Query 04: Average number of pageviews by purchaser type (purchasers vs non-purchasers) in June, July 2017.**
+```sql
+
+with avg_purchaser as (
+  SELECT
+    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+    SUM(pageviews) / COUNT(DISTINCT fullVisitorId) AS avg_pageviews_purchase
+  FROM (
+    SELECT
+      date,
+      totals.pageviews AS pageviews,
+      fullVisitorId
+    FROM
+      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`,
+      UNNEST(hits) AS hits,
+      UNNEST(hits.product) AS product
+    WHERE
+      _table_suffix BETWEEN '0601' AND '0731'
+      AND totals.transactions >= 1
+      AND product.productRevenue IS NOT NULL
+  )
+  GROUP BY
+    month
+)
+,avg_non_purchaser as (
+  SELECT
+    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+    SUM(pageviews) / COUNT(DISTINCT fullVisitorId) AS avg_pageviews_non_purchase
+  FROM (
+    SELECT
+      date,
+      totals.pageviews AS pageviews,
+      fullVisitorId
+    FROM
+      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`,
+      UNNEST(hits) AS hits,
+      UNNEST(hits.product) AS product
+    WHERE
+      _table_suffix BETWEEN '0601' AND '0731'
+      AND  totals.transactions IS NULL
+      AND product.productRevenue is null 
+  )
+  GROUP BY
+    month
+)
+SELECT
+  ap.month
+  ,avg_pageviews_purchase
+  ,avg_pageviews_non_purchase
+FROM
+  avg_purchaser ap,avg_non_purchaser anp
+WHERE
+  ap.month = anp.month;
+
+```
+|month|avg_pageviews_purchase|avg_pageviews_non_purchase|
+|-----|----------------------|--------------------------|
+|201706|94.02050113895217     |316.86558846341671        |
+|201707|124.23755186721992    |334.05655979568053        |
+
+
+### **Query 05: Average number of transactions per user that made a purchase in July 2017**
+```sql
+WITH raw_data_cte AS (
+  SELECT
+    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+    fullVisitorId,
+    totals.transactions AS transactions
+  FROM
+    `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`,
+    UNNEST(hits) AS hits,
+    UNNEST(hits.product) AS product
+  WHERE
+    totals.transactions >= 1
+    AND product.productRevenue IS NOT NULL
+)
+
+SELECT
+  month,
+  SUM(transactions) / COUNT(DISTINCT fullVisitorId) AS Avg_total_transactions_per_user
+FROM
+  raw_data_cte
+GROUP BY
+  month;
+
+```
+|month|Avg_total_transactions_per_user|
+|-----|-------------------------------|
+|201707|4.16390041493776               |
+
+
+
+### **Query 06: Average amount of money spent per session. Only include purchaser data in July 2017**
+```sql
+SELECT
+  FORMAT_DATE('%Y%m',PARSE_DATE('%Y%m%d',date)) as month
+  ,ROUND((SUM(product.productRevenue) /SUM(totals.visits)) /1000000,3) AS avg_revenue_by_user_per_visit
+  from 
+  `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`
+  ,UNNEST(hits) AS hits
+  ,UNNEST(hits.product) AS product
+WHERE
+  totals.transactions IS NOT NULL 
+    AND product.productRevenue IS NOT NULL
+GROUP BY
+  month;
+```
+|month|Avg_revenue_by_user_per_visit|
+|-----|-------------------------------|
+|201707|4.857            |
+
+### **Query 07: Other products purchased by customers who purchased product "YouTube Men's Vintage Henley" in July 2017. Output should show product name and the quantity was ordered.**
+```sql
+
+WITH raw_data AS (
+  SELECT 
+    DISTINCT fullVisitorId
+    ,(product.v2ProductName) AS product_name1
+  FROM 
+    `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`,
+    UNNEST(hits) AS hits,
+    UNNEST(hits.product) AS product
+    WHERE
+      product.v2ProductName = "YouTube Men's Vintage Henley" AND product.productRevenue IS NOT NULL
+)
+SELECT
+  product.v2ProductName
+  ,SUM(product.productQuantity) AS quantity
+FROM
+  raw_data rd
+LEFT JOIN 
+  `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`
+ON  
+  rd.fullVisitorId = `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`.fullVisitorId
+  ,UNNEST(hits) AS hits
+  ,UNNEST(hits.product) AS product
+WHERE product.v2ProductName <> "YouTube Men's Vintage Henley" AND product.productRevenue IS NOT NULL
+GROUP BY
+  product.v2ProductName
+ORDER BY 
+  quantity DESC;
+
+
+```
+|v2ProductName|quantity|
+|-------------|--------|
+|Google Sunglasses|20      |
+|Google Women's Vintage Hero Tee Black|7       |
+|SPF-15 Slim & Slender Lip Balm|6       |
+|Google Women's Short Sleeve Hero Tee Red Heather|4       |
+|YouTube Men's Fleece Hoodie Black|3       |
+|Google Men's Short Sleeve Badge Tee Charcoal|3       |
+|22 oz YouTube Bottle Infuser|2       |
+|Android Men's Vintage Henley|2       |
+|Google Men's Short Sleeve Hero Tee Charcoal|2       |
+|YouTube Twill Cap|2       |
+|Android Women's Fleece Hoodie|2       |
+|Google Doodle Decal|2       |
+|Recycled Mouse Pad|2       |
+|Red Shine 15 oz Mug|2       |
+|Android Wool Heather Cap Heather/Black|2       |
+|Crunch Noise Dog Toy|2       |
+|Google Slim Utility Travel Bag|1       |
+|Google Men's Vintage Badge Tee White|1       |
+|Google Men's  Zip Hoodie|1       |
+|Google Men's 100% Cotton Short Sleeve Hero Tee Red|1       |
+|Android Men's Vintage Tank|1       |
+|Android Men's Short Sleeve Hero Tee White|1       |
+|Android Men's Pep Rally Short Sleeve Tee Navy|1       |
+|YouTube Men's Short Sleeve Hero Tee Black|1       |
+|YouTube Women's Short Sleeve Hero Tee Charcoal|1       |
+|Google Men's Performance Full Zip Jacket Black|1       |
+|26 oz Double Wall Insulated Bottle|1       |
+|Google Men's Pullover Hoodie Grey|1       |
+|YouTube Men's Short Sleeve Hero Tee White|1       |
+|Google Men's Long Sleeve Raglan Ocean Blue|1       |
+|Google Twill Cap|1       |
+|Google Men's Long & Lean Tee Grey|1       |
+|Google Men's Bike Short Sleeve Tee Charcoal|1       |
+|Google 5-Panel Cap|1       |
+|Google Toddler Short Sleeve T-shirt Grey|1       |
+|Android Sticker Sheet Ultra Removable|1       |
+|Google Men's Long & Lean Tee Charcoal|1       |
+|Google Men's Vintage Badge Tee Black|1       |
+|YouTube Custom Decals|1       |
+|Four Color Retractable Pen|1       |
+|Google Laptop and Cell Phone Stickers|1       |
+|Google Men's Performance 1/4 Zip Pullover Heather/Black|1       |
+|YouTube Men's Long & Lean Tee Charcoal|1       |
+|8 pc Android Sticker Sheet|1       |
+|Android Men's Short Sleeve Hero Tee Heather|1       |
+|YouTube Women's Short Sleeve Tri-blend Badge Tee Charcoal|1       |
+|Google Women's Long Sleeve Tee Lavender|1       |
+|YouTube Hard Cover Journal|1       |
+|Android BTTF Moonshot Graphic Tee|1       |
+|Google Men's Airflow 1/4 Zip Pullover Black|1       |
+
+
+### **Query 08: Calculate cohort map from product view to addtocart to purchase in Jan, Feb and March 2017. For example, 100% product view then 40% add_to_cart and 10% purchase.Add_to_cart_rate = number product  add to cart/number product view. Purchase_rate = number product purchase/number product view. The output should be calculated in product level.**
+```sql
+
+with num_view as (
+  select
+    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+    count(*) as num_product_view
+  from
+    `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+    ,UNNEST(hits) AS hits
+    ,UNNEST(hits.product) AS product
+  where
+    _table_suffix between '0101' and '0331' 
+    and eCommerceAction.action_type = '2'
+  group by
+    month
+)
+,num_add as(
+    select
+      FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+      count(*) as num_addtocart
+    from
+      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+      ,UNNEST(hits) AS hits
+      ,UNNEST(hits.product) AS product
+    where
+      _table_suffix between '0101' and '0331' 
+      and eCommerceAction.action_type = '3'
+  group by
+    month
+)
+,num_pur as (
+    select
+      FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+      count(*) as num_purchase
+    from
+      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+      ,UNNEST(hits) AS hits
+      ,UNNEST(hits.product) AS product
+    where
+      _table_suffix between '0101' and '0331' 
+      and eCommerceAction.action_type = '6' and product.productRevenue is not null
+    group by
+        month
+)
+
+select
+  nv.month
+  ,num_product_view
+  ,num_addtocart
+  ,num_purchase
+  ,round(num_addtocart / num_product_view *100,2) as add_to_cart_rate
+  ,round(num_purchase / num_product_view *100,2) as purchase_rate
+from
+  num_view nv, num_add na, num_pur np
+where
+  nv.month = na.month and nv.month = np.month
+order by
+  month
+  ,num_product_view
+  ,num_addtocart
+  ,num_purchase
+  ,num_addtocart 
+
+```
+|month|num_product_view|num_addtocart|num_purchase|add_to_cart_rate|purchase_rate|
+|-----|----------------|-------------|------------|----------------|-------------|
+|201701|25787           |7342         |2143        |28.47           |8.31         |
+|201702|21489           |7360         |2060        |34.25           |9.59         |
+|201703|23549           |8782         |2977        |37.29           |12.64        |
