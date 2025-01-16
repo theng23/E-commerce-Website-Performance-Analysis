@@ -1,4 +1,18 @@
 # Ecommerce-Project
+## I. Introduction
+This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website.
+## II. Requirements
+- Google Cloud Platform account
+- Project on Google Cloud Platform
+- Google BigQuery API enabled
+- SQL query editor or IDE
+## III. Dataset Access
+The eCommerce dataset is stored in a public Google BigQuery dataset. To access the dataset, follow these steps:
+- Log in to your Google Cloud Platform account and create a new project.
+- Navigate to the BigQuery console and select your newly created project.
+- In the navigation panel, select "Add Data" and then "Search a project".
+- Enter the project ID "bigquery-public-data.google_analytics_sample.ga_sessions" and click "Enter".
+- Click on the "ga_sessions_" table to open it.
 ### DATASET
 https://support.google.com/analytics/answer/3437719?hl=en
 | Field Name | Data Type | Description |
@@ -24,17 +38,17 @@ https://support.google.com/analytics/answer/3437719?hl=en
 ### **Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)**
 ```sql
 
-SELECT 
-  FORMAT_DATE('%m',PARSE_DATE('%Y%m%d',date)) AS month
-  ,COUNT(fullVisitorId) AS visits
-  ,SUM(totals.pageviews) AS pageviews
-  ,SUM(totals.transactions) AS transactions
-FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*` 
-WHERE _table_suffix between '0101' AND '0331'
-GROUP BY
-  month
-ORDER By
-  month ASC;
+SELECT
+  format_date("%Y%m", parse_date("%Y%m%d", date)) as month,
+  SUM(totals.visits) AS visits,
+  SUM(totals.pageviews) AS pageviews,
+  SUM(totals.transactions) AS transactions,
+FROM
+  `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+WHERE
+  _TABLE_SUFFIX BETWEEN '0101' AND '0331'
+GROUP BY 1
+ORDER BY 1;
 
 ```
 |month|visits|pageviews|transactions|
@@ -193,111 +207,102 @@ GROUP BY
   time
   ,trafficSource.source
 Order BY
-    revenue DESC;
+    time_type DESC;
 
 ```
-|time_type|time |source|revenue|
-|---------|-----|------|-------|
-|Month    |201706|(direct)|97333.619695|
-|WEEK     |201724|(direct)|30908.909927|
-|WEEK     |201725|(direct)|27295.319924|
-|Month    |201706|google|18757.17992|
-|WEEK     |201723|(direct)|17325.679919|
-|WEEK     |201726|(direct)|14914.80995|
-|WEEK     |201724|google|9217.169976|
-|Month    |201706|dfa   |8862.229996|
-|WEEK     |201722|(direct)|6888.899975|
-|WEEK     |201726|google|5330.569964|
-|WEEK     |201726|dfa   |3704.74|
-|Month    |201706|mail.google.com|2563.13|
-|WEEK     |201724|mail.google.com|2486.86|
-|WEEK     |201724|dfa   |2341.56|
-|WEEK     |201722|google|2119.38999|
-|WEEK     |201722|dfa   |1670.649998|
-|WEEK     |201723|dfa   |1145.279998|
-|WEEK     |201723|google|1083.949999|
-|WEEK     |201725|google|1006.099991|
-|WEEK     |201723|search.myway.com|105.939998|
-|Month    |201706|search.myway.com|105.939998|
-|Month    |201706|groups.google.com|101.96 |
-|WEEK     |201725|mail.google.com|76.27  |
-|Month    |201706|chat.google.com|74.03  |
-|WEEK     |201723|chat.google.com|74.03  |
-|WEEK     |201724|dealspotr.com|72.95  |
-|Month    |201706|dealspotr.com|72.95  |
-|WEEK     |201725|mail.aol.com|64.849998|
-|Month    |201706|mail.aol.com|64.849998|
-|WEEK     |201726|groups.google.com|63.37  |
-|Month    |201706|phandroid.com|52.95  |
-|WEEK     |201725|phandroid.com|52.95  |
-|Month    |201706|sites.google.com|39.17  |
-|WEEK     |201725|groups.google.com|38.59  |
-|WEEK     |201725|sites.google.com|25.19  |
-|WEEK     |201725|google.com|23.99  |
-|Month    |201706|google.com|23.99  |
-|Month    |201706|yahoo |20.39  |
-|WEEK     |201726|yahoo |20.39  |
-|Month    |201706|youtube.com|16.99  |
-|WEEK     |201723|youtube.com|16.99  |
-|Month    |201706|bing  |13.98  |
-|WEEK     |201724|bing  |13.98  |
-|WEEK     |201722|sites.google.com|13.98  |
-|Month    |201706|l.facebook.com|12.48  |
-|WEEK     |201724|l.facebook.com|12.48  |
+|time_type|time  |source           |revenue     |
+|---------|------|-----------------|------------|
+|WEEK     |201724|(direct)         |30908.909927|
+|WEEK     |201724|google           |9217.169976 |
+|WEEK     |201723|(direct)         |17325.679919|
+|WEEK     |201723|dfa              |1145.279998 |
+|WEEK     |201722|google           |2119.38999  |
+|WEEK     |201722|sites.google.com |13.98       |
+|WEEK     |201724|dfa              |2341.56     |
+|WEEK     |201724|dealspotr.com    |72.95       |
+|WEEK     |201725|google.com       |23.99       |
+|WEEK     |201723|search.myway.com |105.939998  |
+|WEEK     |201725|(direct)         |27295.319924|
+|WEEK     |201724|bing             |13.98       |
+|WEEK     |201722|(direct)         |6888.899975 |
+|WEEK     |201724|mail.google.com  |2486.86     |
+|WEEK     |201726|(direct)         |14914.80995 |
+|WEEK     |201726|yahoo            |20.39       |
+|WEEK     |201725|groups.google.com|38.59       |
+|WEEK     |201723|youtube.com      |16.99       |
+|WEEK     |201725|sites.google.com |25.19       |
+|WEEK     |201725|mail.aol.com     |64.849998   |
+|WEEK     |201724|l.facebook.com   |12.48       |
+|WEEK     |201725|google           |1006.099991 |
+|WEEK     |201726|google           |5330.569964 |
+|WEEK     |201726|dfa              |3704.74     |
+|WEEK     |201725|mail.google.com  |76.27       |
+|WEEK     |201725|phandroid.com    |52.95       |
+|WEEK     |201722|dfa              |1670.649998 |
+|WEEK     |201726|groups.google.com|63.37       |
+|WEEK     |201723|google           |1083.949999 |
+|WEEK     |201723|chat.google.com  |74.03       |
+|Month    |201706|google           |18757.17992 |
+|Month    |201706|mail.google.com  |2563.13     |
+|Month    |201706|dealspotr.com    |72.95       |
+|Month    |201706|phandroid.com    |52.95       |
+|Month    |201706|google.com       |23.99       |
+|Month    |201706|search.myway.com |105.939998  |
+|Month    |201706|mail.aol.com     |64.849998   |
+|Month    |201706|l.facebook.com   |12.48       |
+|Month    |201706|sites.google.com |39.17       |
+|Month    |201706|groups.google.com|101.96      |
+|Month    |201706|youtube.com      |16.99       |
+|Month    |201706|(direct)         |97333.619695|
+|Month    |201706|bing             |13.98       |
+|Month    |201706|dfa              |8862.229996 |
+|Month    |201706|yahoo            |20.39       |
+|Month    |201706|chat.google.com  |74.03       |
+
 
 ### **Query 04: Average number of pageviews by purchaser type (purchasers vs non-purchasers) in June, July 2017.**
 ```sql
 
-with avg_purchaser as (
+
+WITH purchaser_data AS(
   SELECT
-    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
-    SUM(pageviews) / COUNT(DISTINCT fullVisitorId) AS avg_pageviews_purchase
-  FROM (
-    SELECT
-      date,
-      totals.pageviews AS pageviews,
-      fullVisitorId
-    FROM
-      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`,
-      UNNEST(hits) AS hits,
-      UNNEST(hits.product) AS product
-    WHERE
-      _table_suffix BETWEEN '0601' AND '0731'
-      AND totals.transactions >= 1
-      AND product.productRevenue IS NOT NULL
-  )
-  GROUP BY
-    month
-)
-,avg_non_purchaser as (
+      FORMAT_DATE("%Y%m",PARSE_DATE("%Y%m%d",date)) AS month
+      ,(SUM(totals.pageviews)/COUNT(DISTINCT fullvisitorid)) AS avg_pageviews_purchase
+  FROM 
+    `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+    ,UNNEST(hits) hits
+    ,UNNEST(product) product
+  WHERE 
+    _table_suffix BETWEEN '0601' AND '0731'
+    AND totals.transactions>=1
+    AND product.productRevenue is not null
+  GROUP BY month
+),
+
+non_purchaser_data AS(
   SELECT
-    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
-    SUM(pageviews) / COUNT(DISTINCT fullVisitorId) AS avg_pageviews_non_purchase
-  FROM (
-    SELECT
-      date,
-      totals.pageviews AS pageviews,
-      fullVisitorId
-    FROM
-      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`,
-      UNNEST(hits) AS hits,
-      UNNEST(hits.product) AS product
-    WHERE
-      _table_suffix BETWEEN '0601' AND '0731'
-      AND  totals.transactions IS NULL
-      AND product.productRevenue is null 
-  )
-  GROUP BY
-    month
+      FORMAT_DATE("%Y%m",PARSE_DATE("%Y%m%d",date)) AS month
+      ,(SUM(totals.pageviews)/COUNT(DISTINCT fullvisitorid)) AS avg_pageviews_non_purchase
+  FROM 
+    `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+    ,UNNEST(hits) hits
+    ,UNNEST(product) product
+  WHERE 
+    _table_suffix BETWEEN '0601' AND '0731'
+    AND totals.transactions IS NULL
+    AND product.productRevenue IS NULL
+  GROUP BY month
 )
+
 SELECT
-  ap.month
-  ,avg_pageviews_purchase
-  ,avg_pageviews_non_purchase
-FROM
-  avg_purchaser ap,avg_non_purchaser anp
-WHERE
-  ap.month = anp.month;
+    pd.*
+    ,avg_pageviews_non_purchase
+FROM 
+  purchaser_data pd
+FULL JOIN 
+  non_purchaser_data
+USING(month)
+ORDER BY pd.month;
 
 ```
 |month|avg_pageviews_purchase|avg_pageviews_non_purchase|
@@ -308,26 +313,17 @@ WHERE
 
 ### **Query 05: Average number of transactions per user that made a purchase in July 2017**
 ```sql
-WITH raw_data_cte AS (
-  SELECT
-    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
-    fullVisitorId,
-    totals.transactions AS transactions
-  FROM
-    `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`,
-    UNNEST(hits) AS hits,
-    UNNEST(hits.product) AS product
-  WHERE
-    totals.transactions >= 1
-    AND product.productRevenue IS NOT NULL
-)
-
 SELECT
-  month,
-  SUM(transactions) / COUNT(DISTINCT fullVisitorId) AS Avg_total_transactions_per_user
-FROM
-  raw_data_cte
-GROUP BY
+  FORMAT_DATE("%Y%m",PARSE_DATE("%Y%m%d",date)) AS month
+  ,SUM(totals.transactions)/COUNT(DISTINCT fullvisitorid) AS Avg_total_transactions_per_user
+FROM 
+  `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`
+  ,UNNEST (hits) hits
+  ,UNNEST(product) product
+WHERE
+  totals.transactions>=1
+  AND product.productRevenue IS NOT NULL
+GROUP BY 
   month;
 
 ```
@@ -446,66 +442,68 @@ ORDER BY
 ### **Query 08: Calculate cohort map from product view to addtocart to purchase in Jan, Feb and March 2017. For example, 100% product view then 40% add_to_cart and 10% purchase.Add_to_cart_rate = number product  add to cart/number product view. Purchase_rate = number product purchase/number product view. The output should be calculated in product level.**
 ```sql
 
-with num_view as (
-  select
-    FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
-    count(*) as num_product_view
-  from
-    `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+WITH product_view AS(
+  SELECT
+    FORMAT_dATE("%Y%m", PARSE_DATE("%Y%m%d", date)) AS month
+    ,COUNT(product.productSKU) AS num_product_view
+  FROM 
+    `bigquery-public-data.google_analytics_sample.ga_sessions_*`
     ,UNNEST(hits) AS hits
     ,UNNEST(hits.product) AS product
-  where
-    _table_suffix between '0101' and '0331' 
-    and eCommerceAction.action_type = '2'
-  group by
+  WHERE 
+    _TABLE_SUFFIX BETWEEN '20170101' AND '20170331'
+    AND hits.eCommerceAction.action_type = '2'
+  GROUP BY 
     month
-)
-,num_add as(
-    select
-      FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
-      count(*) as num_addtocart
-    from
-      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
-      ,UNNEST(hits) AS hits
-      ,UNNEST(hits.product) AS product
-    where
-      _table_suffix between '0101' and '0331' 
-      and eCommerceAction.action_type = '3'
-  group by
+),
+
+add_to_cart AS(
+  SELECT
+    FORMAT_DATE("%Y%m", PARSE_DATE("%Y%m%d", date)) AS month
+    ,COUNT(product.productSKU) AS num_addtocart
+  FROM 
+    `bigquery-public-data.google_analytics_sample.ga_sessions_*`
+    ,UNNEST(hits) AS hits
+    ,UNNEST(hits.product) AS product
+  WHERE 
+    _TABLE_SUFFIX BETWEEN '20170101' AND '20170331'
+    AND hits.eCommerceAction.action_type = '3'
+  GROUP BY 
     month
-)
-,num_pur as (
-    select
-      FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
-      count(*) as num_purchase
-    from
-      `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
-      ,UNNEST(hits) AS hits
-      ,UNNEST(hits.product) AS product
-    where
-      _table_suffix between '0101' and '0331' 
-      and eCommerceAction.action_type = '6' and product.productRevenue is not null
-    group by
-        month
+),
+
+purchase as(
+  SELECT
+    FORMAT_DATE("%Y%m", PARSE_DATE("%Y%m%d", date)) AS month
+    ,COUNT(product.productSKU) AS num_purchase
+  FROM `bigquery-public-data.google_analytics_sample.ga_sessions_*`
+  ,UNNEST(hits) AS hits
+  ,UNNEST(hits.product) as product
+  WHERE 
+    _TABLE_SUFFIX BETWEEN '20170101' AND '20170331'
+    AND hits.eCommerceAction.action_type = '6'
+    AND product.productRevenue IS NOT NULL   
+  group by 1
 )
 
-select
-  nv.month
-  ,num_product_view
+SELECT
+  pv.*
   ,num_addtocart
   ,num_purchase
-  ,round(num_addtocart / num_product_view *100,2) as add_to_cart_rate
-  ,round(num_purchase / num_product_view *100,2) as purchase_rate
-from
-  num_view nv, num_add na, num_pur np
-where
-  nv.month = na.month and nv.month = np.month
-order by
-  month
-  ,num_product_view
-  ,num_addtocart
-  ,num_purchase
-  ,num_addtocart 
+  ,ROUND(num_addtocart*100/num_product_view,2) AS add_to_cart_rate
+  ,ROUND(num_purchase*100/num_product_view,2) AS purchase_rate
+FROM 
+  product_view pv
+LEFT JOIN 
+  add_to_cart a
+ON 
+  pv.month = a.month
+LEFT JOIN
+  purchase p 
+ON 
+  pv.month = p.month
+ORDER BY 
+  pv.month;
 
 ```
 |month|num_product_view|num_addtocart|num_purchase|add_to_cart_rate|purchase_rate|
