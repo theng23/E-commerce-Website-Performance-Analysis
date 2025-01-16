@@ -503,7 +503,7 @@ LEFT JOIN
   purchase p 
 ON 
   pv.month = p.month
-ORDER BY 
+ORDER BY --sorting by month
   pv.month;
 
 ```
