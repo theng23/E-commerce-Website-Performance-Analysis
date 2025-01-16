@@ -35,7 +35,7 @@ Table Schema in this project:
 |hits.product.productRevenue|INTEGER|The revenue of the product, expressed as the value passed to Analytics multiplied by 10^6 (e.g., 2.40 would be given as 2400000).|
 |hits.product.productSKU|STRING|Product SKU.|
 |hits.product.v2ProductName|STRING|Product Name.|
-
+## IV. Exploring the Dataset
 ### **Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)**
 ```sql
 
