@@ -7,12 +7,12 @@ This project contains an eCommerce dataset that i will explore by using SQL on G
 - Google BigQuery API enabled
 - SQL query editor or IDE
 ## III. Dataset Access
-The eCommerce dataset is stored in a public Google BigQuery dataset. To access the dataset, follow these steps:
-- Log in to your Google Cloud Platform account and create a new project.
-- Navigate to the BigQuery console and select your newly created project.
-- In the navigation panel, select "Add Data" and then "Search a project".
-- Enter the project ID "bigquery-public-data.google_analytics_sample.ga_sessions" and click "Enter".
-- Click on the "ga_sessions_" table to open it.
+1. The eCommerce dataset is stored in a public Google BigQuery dataset. To access the dataset, follow these steps:
+  - Log in to your Google Cloud Platform account and create a new project.
+  - Navigate to the BigQuery console and select your newly created project.
+  - In the navigation panel, select "Add Data" and then "Search a project".
+  - Enter the project ID "bigquery-public-data.google_analytics_sample.ga_sessions" and click "Enter".
+  - Click on the "ga_sessions_" table to open it.
 ### DATASET
 https://support.google.com/analytics/answer/3437719?hl=en <br>
 Table Schema in this project:
@@ -35,6 +35,15 @@ Table Schema in this project:
 |hits.product.productRevenue|INTEGER|The revenue of the product, expressed as the value passed to Analytics multiplied by 10^6 (e.g., 2.40 would be given as 2400000).|
 |hits.product.productSKU|STRING|Product SKU.|
 |hits.product.v2ProductName|STRING|Product Name.|
+
+2. The goal of creating this project
+  - Overview of website activity
+  - Bounce rate analysis
+  - Revenue analysis
+  - Transactions analysis
+  - Products analysis
+
+
 ## IV. Exploring the Dataset
 ### **Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)**
 ```sql
