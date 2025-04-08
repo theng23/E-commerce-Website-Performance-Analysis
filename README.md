@@ -1,4 +1,4 @@
-# Ecommerce-Project
+# RFM-Customer-Segmentation - a global retail companyl | Python, Google Colab
 ## I. Introduction
 This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website.
 ## II. Requirements
