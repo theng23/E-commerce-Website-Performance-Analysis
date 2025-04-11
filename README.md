@@ -1,6 +1,12 @@
 # E-commerce Website Performance Analysis | Python, Google Colab
 ## I. Introduction
 This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website.
+The goal of creating this project
+  - Overview of website activity
+  - Bounce rate analysis
+  - Revenue analysis
+  - Transactions analysis
+  - Products analysis
 ## II. Requirements
 - Google Cloud Platform account
 - Project on Google Cloud Platform
@@ -40,12 +46,7 @@ https://support.google.com/analytics/answer/3437719?hl=en <br>
 
 </details>
 
-2. The goal of creating this project
-  - Overview of website activity
-  - Bounce rate analysis
-  - Revenue analysis
-  - Transactions analysis
-  - Products analysis
+
 
 
 ## IV. Exploring the Dataset
