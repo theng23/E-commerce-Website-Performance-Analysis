@@ -1,3 +1,5 @@
+
+![1](https://github.com/user-attachments/assets/c69d3d5e-e3bf-405a-a3fb-cbb38c0a402e)
 # 📊 E-commerce Website Performance Analysis | Python, Google Colab
 ## 📑 I. Introduction
 This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website.
