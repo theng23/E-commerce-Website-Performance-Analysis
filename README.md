@@ -1,5 +1,5 @@
-# E-commerce Website Performance Analysis | Python, Google Colab
-## I. Introduction
+# 📊 E-commerce Website Performance Analysis | Python, Google Colab
+## 📑 I. Introduction
 This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website.
 The goal of creating this project
   - Overview of website activity
@@ -7,12 +7,12 @@ The goal of creating this project
   - Revenue analysis
   - Transactions analysis
   - Products analysis
-## II. Requirements
+## 📖 II. Requirements
 - Google Cloud Platform account
 - Project on Google Cloud Platform
 - Google BigQuery API enabled
 - SQL query editor or IDE
-## III. Dataset Access
+## 📂 III. Dataset Access
 1. The eCommerce dataset is stored in a public Google BigQuery dataset. To access the dataset, follow these steps:
   - Log in to your Google Cloud Platform account and create a new project.
   - Navigate to the BigQuery console and select your newly created project.
@@ -49,7 +49,7 @@ https://support.google.com/analytics/answer/3437719?hl=en <br>
 
 
 
-## IV. Exploring the Dataset
+## ⚒️ IV. Exploring the Dataset
 ### **Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)**
 ```sql
 
