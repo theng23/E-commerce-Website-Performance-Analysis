@@ -15,7 +15,9 @@ This project contains an eCommerce dataset that i will explore by using SQL on G
   - Click on the "ga_sessions_" table to open it.
 ### DATASET
 https://support.google.com/analytics/answer/3437719?hl=en <br>
-Table Schema in this project:
+<details>
+<summary>Table Schema in this project:</summary>
+  
 | Field Name | Data Type | Description |
 |-------|-------|-------|
 | fullVisitorId | STRING | The unique visitor ID. |
@@ -35,6 +37,8 @@ Table Schema in this project:
 |hits.product.productRevenue|INTEGER|The revenue of the product, expressed as the value passed to Analytics multiplied by 10^6 (e.g., 2.40 would be given as 2400000).|
 |hits.product.productSKU|STRING|Product SKU.|
 |hits.product.v2ProductName|STRING|Product Name.|
+
+</details>
 
 2. The goal of creating this project
   - Overview of website activity
@@ -521,3 +525,8 @@ ORDER BY --sorting by month
 |201701|25787           |7342         |2143        |28.47           |8.31         |
 |201702|21489           |7360         |2060        |34.25           |9.59         |
 |201703|23549           |8782         |2977        |37.29           |12.64        |
+
+
+
+
+
