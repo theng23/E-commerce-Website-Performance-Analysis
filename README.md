@@ -1,6 +1,4 @@
 
-![E-commerce_Website_Performance_Analysis (1)](https://github.com/user-attachments/assets/e3ee27b3-55be-4199-9f61-e0e948409c96)
-
 # 📊 E-commerce Website Performance Analysis | SQL, BigQuery
 ## 📑 I. Introduction
 This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website. Using this dataset, queries are executed to analyze website activity in 2017, including calculating the bounce rate, identifying days with the highest revenue, examining user behavior on pages, and performing other forms of analysis.
