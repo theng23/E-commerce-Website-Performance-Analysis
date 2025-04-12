@@ -445,5 +445,7 @@ ORDER BY --sorting by month
 
 In Q1 2017, engagement and conversion rates steadily increased, with March showing the highest rates—37.29% for add-to-cart actions and 12.64% for purchases—indicating enhanced user interest and activity.
 
-
-
+## 🔎V. Conclusion
+👉🏻 This project provide overview of eCommerce activity in website. Help manager grasp information about customer behavior. \
+👉🏻 Analyzing the eCommerce dataset provided key insights into customer behavior, focusing on metrics such as bounce rate, transactions, revenue, visits, and purchases.\
+👉🏻 The analysis of transactions and products provided valuable insights into customer purchasing behavior and product performance.
