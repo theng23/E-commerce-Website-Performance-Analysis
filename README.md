@@ -1,8 +1,9 @@
 
-![1](https://github.com/user-attachments/assets/c69d3d5e-e3bf-405a-a3fb-cbb38c0a402e)
+![E-commerce_Website_Performance_Analysis (1)](https://github.com/user-attachments/assets/e3ee27b3-55be-4199-9f61-e0e948409c96)
+
 # 📊 E-commerce Website Performance Analysis | SQL, BigQuery
 ## 📑 I. Introduction
-This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website.
+This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website. Using this dataset, queries are executed to analyze website activity in 2017, including calculating the bounce rate, identifying days with the highest revenue, examining user behavior on pages, and performing other forms of analysis.
 The goal of creating this project
   - Overview of website activity
   - Bounce rate analysis
@@ -21,7 +22,7 @@ The goal of creating this project
   - In the navigation panel, select "Add Data" and then "Search a project".
   - Enter the project ID "bigquery-public-data.google_analytics_sample.ga_sessions" and click "Enter".
   - Click on the "ga_sessions_" table to open it.
-### DATASET
+### 📌DATASET
 https://support.google.com/analytics/answer/3437719?hl=en <br>
 <details>
 <summary>Table Schema in this project:</summary>
@@ -49,10 +50,10 @@ https://support.google.com/analytics/answer/3437719?hl=en <br>
 </details>
 
 
-
-
 ## ⚒️ IV. Exploring the Dataset
 ### **Query 01: calculate total visit, pageview, transaction for Jan, Feb and March 2017 (order by month)**
+
+- SQL Code:
 ```sql
 
 SELECT 
@@ -68,13 +69,17 @@ GROUP BY 1
 ORDER BY 1; --sorting month
 
 ```
+- Result:
+
 |month|visits|pageviews|transactions|
 |-----|------|---------|------------|
 |01   |64694 |257708   |713         |
 |02   |62192 |233373   |733         |
 |03   |69931 |259522   |993         |
 
+A positive upward trend is observed across all three metrics from February to March. With February showing the lowest site visits, it may be beneficial to explore underlying factors contributing to this dip.
 ### **Query 02: Bounce rate per traffic source in July 2017 (Bounce_rate = num_bounce/total_visit) (order by total_visit DESC)**
+- SQL Code
 ```sql
 SELECT
   trafficSource.source
@@ -89,6 +94,8 @@ ORDER BY --sorting by total visits
   total_visit DESC;
 
 ```
+- Top 10 highest visits
+
 |source                     |total_visit|total_no_of_bounces|bounce_rate|
 |---------------------------|-----------|-------------------|-----------|
 |google                     |38400      |19798              |51.557     |
@@ -101,83 +108,11 @@ ORDER BY --sorting by total visits
 |dfa                        |302        |124                |41.06      |
 |sites.google.com           |230        |97                 |42.174     |
 |facebook.com               |191        |102                |53.403     |
-|reddit.com                 |189        |54                 |28.571     |
-|qiita.com                  |146        |72                 |49.315     |
-|quora.com                  |140        |70                 |50.0       |
-|baidu                      |140        |84                 |60.0       |
-|bing                       |111        |54                 |48.649     |
-|mail.google.com            |101        |25                 |24.752     |
-|yahoo                      |100        |41                 |41.0       |
-|blog.golang.org            |65         |19                 |29.231     |
-|l.facebook.com             |51         |45                 |88.235     |
-|groups.google.com          |50         |22                 |44.0       |
-|t.co                       |38         |27                 |71.053     |
-|google.co.jp               |36         |25                 |69.444     |
-|m.youtube.com              |34         |22                 |64.706     |
-|dealspotr.com              |26         |12                 |46.154     |
-|productforums.google.com   |25         |21                 |84.0       |
-|support.google.com         |24         |16                 |66.667     |
-|ask                        |24         |16                 |66.667     |
-|int.search.tb.ask.com      |23         |17                 |73.913     |
-|optimize.google.com        |21         |10                 |47.619     |
-|docs.google.com            |20         |8                  |40.0       |
-|lm.facebook.com            |18         |9                  |50.0       |
-|l.messenger.com            |17         |6                  |35.294     |
-|duckduckgo.com             |16         |14                 |87.5       |
-|adwords.google.com         |16         |7                  |43.75      |
-|google.co.uk               |15         |7                  |46.667     |
-|sashihara.jp               |14         |8                  |57.143     |
-|lunametrics.com            |13         |8                  |61.538     |
-|search.mysearch.com        |12         |11                 |91.667     |
-|tw.search.yahoo.com        |10         |8                  |80.0       |
-|outlook.live.com           |10         |7                  |70.0       |
-|phandroid.com              |9          |7                  |77.778     |
-|plus.google.com            |8          |2                  |25.0       |
-|connect.googleforwork.com  |8          |5                  |62.5       |
-|m.yz.sm.cn                 |7          |5                  |71.429     |
-|google.co.in               |6          |3                  |50.0       |
-|search.xfinity.com         |6          |6                  |100.0      |
-|online-metrics.com         |5          |2                  |40.0       |
-|hangouts.google.com        |5          |1                  |20.0       |
-|s0.2mdn.net                |5          |3                  |60.0       |
-|google.ru                  |5          |1                  |20.0       |
-|in.search.yahoo.com        |4          |2                  |50.0       |
-|googleads.g.doubleclick.net|4          |1                  |25.0       |
-|away.vk.com                |4          |3                  |75.0       |
-|m.sogou.com                |4          |3                  |75.0       |
-|m.baidu.com                |3          |2                  |66.667     |
-|siliconvalley.about.com    |3          |2                  |66.667     |
-|getpocket.com              |3          |                   |           |
-|centrum.cz                 |2          |2                  |100.0      |
-|plus.url.google.com        |2          |                   |           |
-|github.com                 |2          |2                  |100.0      |
-|myactivity.google.com      |2          |1                  |50.0       |
-|uk.search.yahoo.com        |2          |1                  |50.0       |
-|au.search.yahoo.com        |2          |2                  |100.0      |
-|m.sp.sm.cn                 |2          |2                  |100.0      |
-|search.1and1.com           |2          |2                  |100.0      |
-|moodle.aurora.edu          |2          |2                  |100.0      |
-|google.cl                  |2          |1                  |50.0       |
-|amp.reddit.com             |2          |1                  |50.0       |
-|calendar.google.com        |2          |1                  |50.0       |
-|google.it                  |2          |1                  |50.0       |
-|msn.com                    |2          |1                  |50.0       |
-|wap.sogou.com              |2          |2                  |100.0      |
-|google.co.th               |2          |1                  |50.0       |
-|images.google.com.au       |1          |1                  |100.0      |
-|it.pinterest.com           |1          |1                  |100.0      |
-|web.facebook.com           |1          |1                  |100.0      |
-|ph.search.yahoo.com        |1          |                   |           |
-|web.mail.comcast.net       |1          |1                  |100.0      |
-|es.search.yahoo.com        |1          |1                  |100.0      |
-|google.bg                  |1          |1                  |100.0      |
-|news.ycombinator.com       |1          |1                  |100.0      |
-|arstechnica.com            |1          |                   |           |
-|search.tb.ask.com          |1          |                   |           |
-|online.fullsail.edu        |1          |1                  |100.0      |
-|mx.search.yahoo.com        |1          |1                  |100.0      |
-|suche.t-online.de          |1          |1                  |100.0      |
-|google.com.br              |1          |                   |           |
+
+- Top 10 lowest visits
+
+|source                     |total_visit|total_no_of_bounces|bounce_rate|
+|---------------------------|-----------|-------------------|-----------|
 |gophergala.com             |1          |1                  |100.0      |
 |google.nl                  |1          |                   |           |
 |google.ca                  |1          |                   |           |
@@ -189,7 +124,14 @@ ORDER BY --sorting by total visits
 |google.es                  |1          |1                  |100.0      |
 |malaysia.search.yahoo.com  |1          |1                  |100.0      |
 
+The result presents a summary of website traffic from different sources and key metrics used to assess user engagement and behaviours. It focuses on four main elements: source, total_visits, total_no_bounces and bounce_rate.
+
+The top source of traffic to the website is Google however significant bounce rate(51.557&).Meanwhile, direct visits show a lower bounce rate (43.266%) and are the second-largest contributor to traffic. Additionally, platforms like YouTube and Facebook have high bounce rates, suggesting potential areas for improvement in user retention strategies.
+
+Some traffic sources, like "gophergala.com," "kik.com," and "malaysia.search.yahoo.com," show a 100% bounce rate, suggesting visitors leave immediately without further interaction. This indicates potential mismatches between user expectations and the content or landing pages for these sources, worth investigating further.
+
 ### **Query 03: Revenue by traffic source by week, by month in June 2017**  
+- SQL Code
 ```sql
   
 SELECT --find revenue by traffic by week
@@ -227,6 +169,9 @@ Order BY
     time_type DESC;
 
 ```
+<details>
+<summary>Results:</summary>
+
 |time_type|time  |source           |revenue     |
 |---------|------|-----------------|------------|
 |WEEK     |201724|(direct)         |30908.909927|
@@ -275,11 +220,13 @@ Order BY
 |Month    |201706|dfa              |8862.229996 |
 |Month    |201706|yahoo            |20.39       |
 |Month    |201706|chat.google.com  |74.03       |
+</details>
+The table presents revenue data categorized by attributes such as time type, time period, source, and revenue amount. Revenue originates from various channels, including direct website visits, search traffic, and referrals from external websites.
 
 
 ### **Query 04: Average number of pageviews by purchaser type (purchasers vs non-purchasers) in June, July 2017.**
+- SQL Code
 ```sql
-
 
 WITH purchaser_data AS( --find a purchaser
   SELECT
@@ -327,8 +274,10 @@ ORDER BY pd.month;
 |201706|94.02050113895217     |316.86558846341671        |
 |201707|124.23755186721992    |334.05655979568053        |
 
+Purchasers have lower average pageviews compared to non-purchasers, but from June to July 2017, purchasers' average pageviews increased significantly by 30.22%, while non-purchasers' pageviews rose modestly by 5.42%. This suggests improved engagement for purchasers, while non-purchasers may still struggle with decision-making or navigation.
 
 ### **Query 05: Average number of transactions per user that made a purchase in July 2017**
+- SQL Code
 ```sql
 SELECT
   FORMAT_DATE("%Y%m",PARSE_DATE("%Y%m%d",date)) AS month
@@ -348,9 +297,10 @@ GROUP BY
 |-----|-------------------------------|
 |201707|4.16390041493776               |
 
-
+Average total transactions per user in July 2017 is 4.1639. This information serves to understand user behavior, monitor platform engagement levels, and assess the effectiveness of marketing efforts or promotions conducted during that period
 
 ### **Query 06: Average amount of money spent per session. Only include purchaser data in July 2017**
+- SQL Code
 ```sql
 SELECT
   FORMAT_DATE('%Y%m',PARSE_DATE('%Y%m%d',date)) as month
@@ -369,7 +319,10 @@ GROUP BY
 |-----|-------------------------------|
 |201707|4.857            |
 
+In July 2017, the average revenue generated per user per visit amounted to 43.857. This indicates that, on average, users spent around 44 during that time. Such a metric serves as a valuable tool for businesses to gauge user engagement and monitor overall activity levels.
+
 ### **Query 07: Other products purchased by customers who purchased product "YouTube Men's Vintage Henley" in July 2017. Output should show product name and the quantity was ordered.**
+- SQL Code
 ```sql
 
 WITH raw_data AS ( --find customer who purchased product "YouTube Men's Vintage Henley" in July 2017
@@ -414,49 +367,12 @@ ORDER BY  --sorting by quantity
 |Android Men's Vintage Henley|2       |
 |Google Men's Short Sleeve Hero Tee Charcoal|2       |
 |YouTube Twill Cap|2       |
-|Android Women's Fleece Hoodie|2       |
-|Google Doodle Decal|2       |
-|Recycled Mouse Pad|2       |
-|Red Shine 15 oz Mug|2       |
-|Android Wool Heather Cap Heather/Black|2       |
-|Crunch Noise Dog Toy|2       |
-|Google Slim Utility Travel Bag|1       |
-|Google Men's Vintage Badge Tee White|1       |
-|Google Men's  Zip Hoodie|1       |
-|Google Men's 100% Cotton Short Sleeve Hero Tee Red|1       |
-|Android Men's Vintage Tank|1       |
-|Android Men's Short Sleeve Hero Tee White|1       |
-|Android Men's Pep Rally Short Sleeve Tee Navy|1       |
-|YouTube Men's Short Sleeve Hero Tee Black|1       |
-|YouTube Women's Short Sleeve Hero Tee Charcoal|1       |
-|Google Men's Performance Full Zip Jacket Black|1       |
-|26 oz Double Wall Insulated Bottle|1       |
-|Google Men's Pullover Hoodie Grey|1       |
-|YouTube Men's Short Sleeve Hero Tee White|1       |
-|Google Men's Long Sleeve Raglan Ocean Blue|1       |
-|Google Twill Cap|1       |
-|Google Men's Long & Lean Tee Grey|1       |
-|Google Men's Bike Short Sleeve Tee Charcoal|1       |
-|Google 5-Panel Cap|1       |
-|Google Toddler Short Sleeve T-shirt Grey|1       |
-|Android Sticker Sheet Ultra Removable|1       |
-|Google Men's Long & Lean Tee Charcoal|1       |
-|Google Men's Vintage Badge Tee Black|1       |
-|YouTube Custom Decals|1       |
-|Four Color Retractable Pen|1       |
-|Google Laptop and Cell Phone Stickers|1       |
-|Google Men's Performance 1/4 Zip Pullover Heather/Black|1       |
-|YouTube Men's Long & Lean Tee Charcoal|1       |
-|8 pc Android Sticker Sheet|1       |
-|Android Men's Short Sleeve Hero Tee Heather|1       |
-|YouTube Women's Short Sleeve Tri-blend Badge Tee Charcoal|1       |
-|Google Women's Long Sleeve Tee Lavender|1       |
-|YouTube Hard Cover Journal|1       |
-|Android BTTF Moonshot Graphic Tee|1       |
-|Google Men's Airflow 1/4 Zip Pullover Black|1       |
 
+The table highlights inventory levels, with Google Sunglasses having the highest quantity (20) and several items, like Google Lip Balm and YouTube Hoodies, having the lowest quantity (2). This snapshot is useful for managing stock or planning replenishment strategies.
 
 ### **Query 08: Calculate cohort map from product view to addtocart to purchase in Jan, Feb and March 2017. For example, 100% product view then 40% add_to_cart and 10% purchase.Add_to_cart_rate = number product  add to cart/number product view. Purchase_rate = number product purchase/number product view. The output should be calculated in product level.**
+
+- Code SQL
 ```sql
 
 WITH product_view AS( --find product view
@@ -529,7 +445,7 @@ ORDER BY --sorting by month
 |201702|21489           |7360         |2060        |34.25           |9.59         |
 |201703|23549           |8782         |2977        |37.29           |12.64        |
 
-
+In Q1 2017, engagement and conversion rates steadily increased, with March showing the highest rates—37.29% for add-to-cart actions and 12.64% for purchases—indicating enhanced user interest and activity.
 
 
 
