@@ -100,8 +100,9 @@ ORDER BY --sorting by total visits
   total_visit DESC;
 
 ```
-- Top 10 highest visits
-
+<details>
+<summary>Top 10 highest visits</summary>
+  
 |source                     |total_visit|total_no_of_bounces|bounce_rate|
 |---------------------------|-----------|-------------------|-----------|
 |google                     |38400      |19798              |51.557     |
@@ -115,7 +116,18 @@ ORDER BY --sorting by total visits
 |sites.google.com           |230        |97                 |42.174     |
 |facebook.com               |191        |102                |53.403     |
 
-- Top 10 lowest visits
+</details>
+
+
+The result presents a summary of website traffic from different sources and key metrics used to assess user engagement and behaviours. It focuses on four main elements: source, total_visits, total_no_bounces and bounce_rate.
+
+The top source of traffic to the website is Google however significant bounce rate(51.557&).Meanwhile, direct visits show a lower bounce rate (43.266%) and are the second-largest contributor to traffic. Additionally, platforms like YouTube and Facebook have high bounce rates, suggesting potential areas for improvement in user retention strategies.
+
+
+<details>
+<summary>Top 10 lowest visits:</summary>
+
+
 
 |source                     |total_visit|total_no_of_bounces|bounce_rate|
 |---------------------------|-----------|-------------------|-----------|
@@ -130,9 +142,9 @@ ORDER BY --sorting by total visits
 |google.es                  |1          |1                  |100.0      |
 |malaysia.search.yahoo.com  |1          |1                  |100.0      |
 
-The result presents a summary of website traffic from different sources and key metrics used to assess user engagement and behaviours. It focuses on four main elements: source, total_visits, total_no_bounces and bounce_rate.
+</details>
 
-The top source of traffic to the website is Google however significant bounce rate(51.557&).Meanwhile, direct visits show a lower bounce rate (43.266%) and are the second-largest contributor to traffic. Additionally, platforms like YouTube and Facebook have high bounce rates, suggesting potential areas for improvement in user retention strategies.
+
 
 Some traffic sources, like "gophergala.com," "kik.com," and "malaysia.search.yahoo.com," show a 100% bounce rate, suggesting visitors leave immediately without further interaction. This indicates potential mismatches between user expectations and the content or landing pages for these sources, worth investigating further.
 
