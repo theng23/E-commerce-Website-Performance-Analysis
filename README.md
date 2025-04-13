@@ -84,6 +84,7 @@ ORDER BY 1; --sorting month
 
 A positive upward trend is observed across all three metrics from February to March. With February showing the lowest site visits, it may be beneficial to explore underlying factors contributing to this dip.
 ### **Query 02: Bounce rate per traffic source in July 2017 (Bounce_rate = num_bounce/total_visit) (order by total_visit DESC)**
+- Bounce rate is a measures the percentage of visitors who enter a website and leave without interacting further, such as clicking a link or visiting another page.
 - SQL Code
 ```sql
 SELECT
