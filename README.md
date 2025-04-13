@@ -1,9 +1,14 @@
 
 # 📊 E-commerce Website Performance Analysis | SQL, BigQuery
 ## 📑 I. Introduction
-This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website. Using this dataset, queries are executed to analyze website activity in 2017, including calculating the bounce rate, identifying days with the highest revenue, examining user behavior on pages, and performing other forms of analysis.
+### 📖 What is this project about?
+✔️ This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery.\
+✔️ The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website.\
+✔️ Using this dataset, queries are executed to analyze website activity in 2017, including calculating the bounce rate, identifying days with the highest revenue, examining user behavior on pages, and performing other forms of analysis.
 
-<details>
+
+###
+<details> 
 <summary>The goal of creating this project:</summary>
   
   - Overview of website activity
