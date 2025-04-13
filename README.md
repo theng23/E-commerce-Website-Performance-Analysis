@@ -2,19 +2,26 @@
 # 📊 E-commerce Website Performance Analysis | SQL, BigQuery
 ## 📑 I. Introduction
 This project contains an eCommerce dataset that i will explore by using SQL on Google BigQuery. The dataset is based on the Google Analytics public dataset and contains data from an eCommerce website. Using this dataset, queries are executed to analyze website activity in 2017, including calculating the bounce rate, identifying days with the highest revenue, examining user behavior on pages, and performing other forms of analysis.
-The goal of creating this project
+
+<details>
+<summary>The goal of creating this project:</summary>
+  
   - Overview of website activity
   - Bounce rate analysis
   - Revenue analysis
   - Transactions analysis
   - Products analysis
+
+</details>
+
+
 ## 📖 II. Requirements
 - Google Cloud Platform account
 - Project on Google Cloud Platform
 - Google BigQuery API enabled
 - SQL query editor or IDE
 ## 📂 III. Dataset Access
-1. The eCommerce dataset is stored in a public Google BigQuery dataset. To access the dataset, follow these steps:
+The eCommerce dataset is stored in a public Google BigQuery dataset. To access the dataset, follow these steps:
   - Log in to your Google Cloud Platform account and create a new project.
   - Navigate to the BigQuery console and select your newly created project.
   - In the navigation panel, select "Add Data" and then "Search a project".
