@@ -20,7 +20,7 @@
 </details>
 
 
-## 📖 II. Requirements
+## 📜 II. Requirements
 - Google Cloud Platform account
 - Project on Google Cloud Platform
 - Google BigQuery API enabled
