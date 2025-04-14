@@ -11,11 +11,11 @@
 <details> 
 <summary>The goal of creating this project:</summary>
   
-  - Overview of website activity
-  - Bounce rate analysis
-  - Revenue analysis
-  - Transactions analysis
-  - Products analysis
+  👉🏻 Overview of website activity\
+  👉🏻 Bounce rate analysis\
+  👉🏻 Revenue analysis\
+  👉🏻 Transactions analysis\
+  👉🏻 Products analysis
 
 </details>
 
