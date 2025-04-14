@@ -19,7 +19,6 @@
 
 </details>
 
-
 ## 📜 II. Requirements
 - Google Cloud Platform account
 - Project on Google Cloud Platform
